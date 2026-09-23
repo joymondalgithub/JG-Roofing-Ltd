@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-deep: #0D0E11; /* Sophisticated Dark Charcoal Black */
+  --color-navy-slate: #15171C; /* Premium Textured Charcoal Slate */
+  --color-navy-border: #23262D; /* Elegant Architectural Slate Border */
+  --color-warm-offwhite: #FBFBFA; /* Pure Sophisticated Light Sand Stone */
+  --color-copper: #D97736; /* Vibrant Architectural Warm Copper Accent */
+  --color-copper-hover: #C25E21; /* Slightly Richer Warm Copper Hover Accent */
+  
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+@layer base {
+  /* Strictly consolidate all typography to 1-2 font families: Inter for body and Space Grotesk for headings/display */
+  html, body, div, span, applet, object, iframe, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, input, select, textarea, button {
+    font-family: "Inter", sans-serif !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-display, [class*="font-display"] {
+    font-family: "Space Grotesk", sans-serif !important;
+  }
+
+  body {
+    background-color: var(--color-navy-deep);
+    color: #CBD5E1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  /* Standardized 3-Button Design System */
+  /* 1. Primary: Copper background, bold high-contrast, rounded-lg, subtle shadow */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background-color: #D97736;
+    color: #FFFFFF;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25);
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #C25E21;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+
+  /* 2. Secondary: Dark Slate with subtle border, rounded-lg, copper hover accent */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background-color: rgba(21, 23, 28, 0.85);
+    color: #FFFFFF;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0.5rem;
+    border: 1px solid #23262D;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background-color: #15171C;
+    border-color: rgba(217, 119, 54, 0.45);
+    color: #FFFFFF;
+  }
+
+  /* 3. Tertiary / Outline: Subtle utility border button */
+  .btn-tertiary, .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background-color: transparent;
+    color: #CBD5E1;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 0.5rem;
+    border: 1px solid #23262D;
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-tertiary:hover, .btn-outline:hover {
+    background-color: rgba(35, 38, 45, 0.6);
+    color: #FFFFFF;
+    border-color: rgba(203, 213, 225, 0.4);
+  }
+}
+
+/* Custom interactive compare slider classes */
+.clip-path-slider {
+  clip-path: polygon(0 0, var(--slider-pos) 0, var(--slider-pos) 100%, 0 100%);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0E11;
+}
+::-webkit-scrollbar-thumb {
+  background: #23262D;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D97736;
+}
+
+/* Pulse animation for estimator highlight */
+@keyframes ring-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 54, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(217, 119, 54, 0);
+  }
+}
+
+.pulse-ring {
+  animation: ring-pulse 2s infinite;
+}
