@@ -75,6 +75,7 @@ export default function ServiceAreas() {
                   alt="Professionally maintained slate residential roof in Dublin Irish architectural style"
                   loading="lazy"
                   decoding="async"
+                  referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1200ms] group-hover:scale-105"
                 />
                 

@@ -138,7 +138,7 @@ export default function Services() {
       id: "arch",
       icon: <Compass className="w-5 h-5 text-copper" />,
       title: "Leadwork & Flashing",
-      imageUrl: "https://lh3.googleusercontent.com/aida/AEtjO1UbCGSnJDWlUJemUrELsKScKYkeKsxN3-CG_TIL5fqlwTYwWl6h6nFJ4ZXWOKc5wtWw9WcL9JXnr4IQ6DOzcfjJXTgaGQsVkOd5CElA4c9s-gg9upJoYXZesYm2yHjOa89pETB8bwArhMqNTSafgldw5KIAAmOrDkOLQwnDcYM9fD78_kJR28q8wNWFKQuUMsVIcRsVKqAWB1pR8IelROSrv_5K6htqcqIj4JrahEmfioHI84LVU3P5-A=s0",
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQFKeUzW8MMetwd2JES44f9n9fpnpgBdAmJ2TdhOLgJHXMyGYsN83_P6AnttG7XinJX3abyKQKYKo-XJ8m0CLTk4Tu2NMv0rNgjISgob3ETQEHC-tHNwW8-6d6hbmI33_Sg56xdat05kEZejgUq46XSQ8GyJGnEGOCjr4lDVrG7sII5vK1k1p1d-e4iMDMhP20mP3onJDBrW7410NBw_qbywnwh_LyTbLvXUERQKGZjckmcb7kGSoIc9_w2T-IIIgR=s0",
       shortDesc: "Bespoke Code 4 & 5 lead valleys, box gutters, chimney saddles, and step flashings.",
       longDesc: "Lead is the soul of a historic or high-spec roof. We hand-dress and weld Code 4 and Code 5 sheet lead on site. Our valleys and step systems include proper expansion joints to prevent metal splitting over cold/hot seasons.",
       specifications: [
@@ -235,6 +235,7 @@ export default function Services() {
                         alt={svc.title} 
                         loading="lazy"
                         decoding="async"
+                        referrerPolicy="no-referrer"
                         className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-navy-slate via-transparent to-transparent opacity-80" />

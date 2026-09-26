@@ -26,10 +26,11 @@ export default function EstimateCTA() {
       {/* Background with subtle overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFoJgI96aH3v5-b-Z53nF6p9Kz0oYk20e2QhXvPZJ67K7J4w6w41Ggq5e7i0e0mYwP3bE4u2nQ3qY9tN6hKqU2qP0b4t6Z_x8P6Q=s0"
-          alt="Premium roofing installation by JG Roofing Ltd"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw475GXFyYO1HWWwzt_74rIX2jFRmUBPSkhz7LBcEvgGzUtGexkc-3Ive_nUQaYQuRT5qjgrTZe4gDnLhblMHX5Udfo7F1Ba_IGT5ml69VBNB5JKMRQR_ewURFXK4dwBTPXcGomcMj1qzLVfwfQxYkSrbySoLypYyQimGsS9utHDTxl3Yka0rcP1kqSWu6S8Hkq0vA8HtfppikEOAsfE_QEJzl8xxhkZiRDnWsg0spREdsZw78YFAH4-n3NL4Oe2cT=s0"
+          alt="Premium slate roofing installation by JG Roofing Ltd"
           loading="lazy"
           decoding="async"
+          referrerPolicy="no-referrer"
           className="w-full h-full object-cover object-center"
         />
         {/* Subtle gradient */}

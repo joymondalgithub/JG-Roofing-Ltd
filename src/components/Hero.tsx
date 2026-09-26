@@ -31,6 +31,7 @@ export default function Hero() {
           alt="JG Roofing Ltd slate roofing craftsmanship"
           className="w-full h-full object-cover object-[center_35%]"
           loading="eager"
+          referrerPolicy="no-referrer"
         />
         
         {/* Dark overlay */}

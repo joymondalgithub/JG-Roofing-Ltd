@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -63,22 +64,11 @@ export default function Header() {
           {/* LEFT SIDE: JG Roofing Ltd Logo & Brand */}
           <a
             href="#"
-            className="flex items-center gap-3 shrink-0 group focus:outline-none"
+            className="flex items-center gap-3 shrink-0 group focus:outline-none focus:ring-2 focus:ring-copper/50 rounded-lg p-1"
             onClick={(e) => handleLinkClick(e, "#")}
+            aria-label="JG Roofing Ltd Home"
           >
-            <div className="flex items-center">
-              <img
-                src="https://lh3.googleusercontent.com/aida/AEtjO1W-slx9XtTd4CeepoHcTS2cJM0Xcap88SDe_0wy9TqPQX2H_NHGZWDGecpRn_BJEpkxM_JGQ1gQ9KnRiezyWHGoQQj882iu92QOopzPCvZN36gPdoo0gW_dHPQrmWGSO96jOH-zzVoN5JdSRBTP-0nYTccFsmdflTwvN5P8UinIF4eHo0f7mckDYXqqTVljjhoCMcsICLS4ld2v5xGAQiHXIrCvEPceQCJX8vHDwEYsXomjGt8HpQr5zA"
-                alt="JG Roofing Ltd Logo"
-                className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-102"
-                onError={(e) => {
-                  (e.target as HTMLElement).style.display = 'none';
-                }}
-              />
-              <span className="hidden md:inline-block font-display text-xs font-bold text-slate-400 uppercase tracking-widest pl-3 ml-3 border-l border-navy-border/80">
-                ARCHITECTURAL ROOFING CONTRACTORS
-              </span>
-            </div>
+            <Logo size="md" showSubtitle={true} />
           </a>
 
           {/* CENTER: 5 Simplified Navigation Links (Slightly larger font size) */}

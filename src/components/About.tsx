@@ -128,11 +128,15 @@ export default function About() {
             <ScrollReveal direction="right" delay={0.2} distance={40}>
               <div className="relative overflow-hidden rounded-xl border border-slate-200 shadow-xl bg-navy-deep group">
                 <img
-                  src="https://lh3.googleusercontent.com/aida/AEtjO1UbCGSnJDWlUJemUrELsKScKYkeKsxN3-CG_TIL5fqlwTYwWl6h6nFJ4ZXWOKc5wtWw9WcL9JXnr4IQ6DOzcfjJXTgaGQsVkOd5CElA4c9s-gg9upJoYXZesYm2yHjOa89pETB8bwArhMqNTSafgldw5KIAAmOrDkOLQwnDcYM9fD78_kJR28q8wNWFKQuUMsVIcRsVKqAWB1pR8IelROSrv_5K6htqcqIj4JrahEmfioHI84LVU3P5-A=s0"
-                  alt="Slaters at work hand-fitting natural slate tiles on timber batten"
+                  src="/assets/images/about-construction-slate.webp"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/assets/images/about-construction-slate.jpg';
+                  }}
+                  alt="Roofing construction craftsmanship hand-fitting natural slate tiles on timber batten"
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto object-cover object-center transition-transform duration-750 group-hover:scale-[1.02]"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-auto aspect-[734/564] object-cover object-center transition-transform duration-750 group-hover:scale-[1.02]"
                 />
                 
                 {/* Bottom metadata strip */}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Phone, Mail, Clock, Award, X, Shield, FileText } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
+import Logo from "./Logo";
 
 export default function Footer() {
   const [legalModal, setLegalModal] = useState<"privacy" | "terms" | null>(null);
@@ -47,17 +48,7 @@ export default function Footer() {
           <ScrollReveal direction="left" delay={0.05} distance={30} className="lg:col-span-5">
             <div className="space-y-6">
               <div className="flex items-center gap-2">
-                <img
-                  src="https://lh3.googleusercontent.com/aida/AEtjO1W-slx9XtTd4CeepoHcTS2cJM0Xcap88SDe_0wy9TqPQX2H_NHGZWDGecpRn_BJEpkxM_JGQ1gQ9KnRiezyWHGoQQj882iu92QOopzPCvZN36gPdoo0gW_dHPQrmWGSO96jOH-zzVoN5JdSRBTP-0nYTccFsmdflTwvN5P8UinIF4eHo0f7mckDYXqqTVljjhoCMcsICLS4ld2v5xGAQiHXIrCvEPceQCJX8vHDwEYsXomjGt8HpQr5zA"
-                  alt="JG Roofing Ltd"
-                  className="h-9 w-auto object-contain"
-                  onError={(e) => {
-                    (e.target as HTMLElement).style.display = 'none';
-                  }}
-                />
-                <span className="font-display font-bold text-lg text-white tracking-tight">
-                  JG <span className="text-copper">ROOFING Ltd</span>
-                </span>
+                <Logo size="md" showSubtitle={false} />
               </div>
               
               <p className="font-body text-xs text-slate-400 leading-relaxed max-w-sm">

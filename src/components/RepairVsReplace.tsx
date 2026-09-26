@@ -88,6 +88,7 @@ export default function RepairVsReplace() {
                   alt="Technical roof underlay and breathable membrane installation"
                   loading="lazy"
                   decoding="async"
+                  referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
