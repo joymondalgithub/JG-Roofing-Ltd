@@ -30,7 +30,7 @@ export default function WhyChooseUs() {
   ];
 
   return (
-    <section id="why-choose-us" className="py-24 bg-navy-deep text-slate-300 border-t border-b border-navy-border overflow-hidden">
+    <section id="why-choose-us" className="scroll-mt-24 py-24 bg-navy-deep text-slate-300 border-t border-b border-navy-border overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header Title with Left-to-Right and Right-to-Left animations */}

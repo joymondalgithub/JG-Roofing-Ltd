@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Filter, MapPin, Eye, X, Shield, Layers, Calendar, ClipboardCheck } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { MapPin, Eye, X, Shield, Layers, Calendar, ClipboardCheck, ArrowRight } from "lucide-react";
 import { ScrollReveal } from "./ScrollReveal";
 
 interface ProjectItem {
@@ -16,40 +17,38 @@ interface ProjectItem {
   beforeNotes: string;
 }
 
-export default function ProjectGallery() {
+interface ProjectGalleryProps {
+  featuredOnly?: boolean;
+}
+
+export default function ProjectGallery({ featuredOnly = false }: ProjectGalleryProps) {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
 
-  // Close modal on Escape key
+  // Close modal on Escape key and lock background scroll
   useEffect(() => {
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setSelectedProject(null);
       }
     };
     if (selectedProject) {
+      document.body.style.overflow = "hidden";
+      if (lenis) lenis.stop();
       window.addEventListener("keydown", handleKeyDown);
     }
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+      if (lenis) lenis.start();
+    };
   }, [selectedProject]);
 
   const handleModalScrollToEstimator = () => {
     setSelectedProject(null);
-    const lenis = (window as any).__lenis;
-    const element = document.querySelector("#estimator");
-    if (element) {
-      if (lenis) {
-        lenis.scrollTo(element as HTMLElement, { offset: -76, duration: 1.2 });
-      } else {
-        const headerOffset = 80;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    }
+    navigate("/contact");
   };
 
   const projects: ProjectItem[] = [
@@ -59,7 +58,7 @@ export default function ProjectGallery() {
       category: "slate",
       categoryLabel: "Natural Slate Restoration",
       location: "Terenure, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDzUdEY6dKd9qawhdVuKASrQ4NpjYHFbv1Add8cn9Uha8d7xPXmu_KLvVKGe6_KOLFJXur7mJAnOzEW6VC5sjokbIZGC480XcYiK8asLtNIdph1WadcXMCZoNbElz8oT3Yup8EfMh2SMhyjFN54EfFQcTSgv2O693VBKq_O_6c0g5wMZq_B01sFEXC2HfSrjXw-LtLouhJPxryaoiRpuccgTkVwOsJVP8NnZjPUiUsuo7NjQ78mux-GbztbMb-CCZKz=s0",
+      imageUrl: "/assets/images/about-construction-slate.webp",
       shortDesc: "Complete heritage replacement using double-lapped natural slate and custom-formed Code 5 lead valleys.",
       scope: [
         "Sorted, graded, and sized natural Spanish slates",
@@ -77,7 +76,7 @@ export default function ProjectGallery() {
       category: "structural",
       categoryLabel: "Structural Framing & Truss Work",
       location: "Rathgar, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDPNz5Cjp_wYSThLONS_wRPU6WU4vWxabWBZ8qSHZyfjrc9cIg1VwjVrIlczoMgzmAgZ8qL7k2_ze8XqX8zmtDws-33Bq_og0TdzlAdUxdv2GDUx3L3LShfLqp-LHco9wDImP7MaAuUPOtJZWAiUHCpzsLISadwoqEpP_USDxv6Rtf0y1E-i6DvuWmywE5tzW4Q_o6tNvKythzsN3DgL0hU1wPbcryVh21p3TXzjL2AGA6vCduwwZIfhqrriQqMrtqR=s0",
+      imageUrl: "/assets/images/structural-timber-truss.webp",
       shortDesc: "Structural sistering of sagged timber joists and dormer window carpentry ready for tiling.",
       scope: [
         "Aligned deflected joists using C24 graded timbers",
@@ -95,7 +94,7 @@ export default function ProjectGallery() {
       category: "structural",
       categoryLabel: "High-Tensile Underlay & Skylights",
       location: "Clontarf, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDQFKeUzW8MMetwd2JES44f9n9fpnpgBdAmJ2TdhOLgJHXMyGYsN83_P6AnttG7XinJX3abyKQKYKo-XJ8m0CLTk4Tu2NMv0rNgjISgob3ETQEHC-tHNwW8-6d6hbmI33_Sg56xdat05kEZejgUq46XSQ8GyJGnEGOCjr4lDVrG7sII5vK1k1p1d-e4iMDMhP20mP3onJDBrW7410NBw_qbywnwh_LyTbLvXUERQKGZjckmcb7kGSoIc9_w2T-IIIgR=s0",
+      imageUrl: "/assets/images/skylight-underlay.webp",
       shortDesc: "Breathable moisture membrane layout with matching battens and Velux weather-sealed window unit.",
       scope: [
         "Cut timber framework to house flush roof window profile",
@@ -113,7 +112,7 @@ export default function ProjectGallery() {
       category: "flat",
       categoryLabel: "Flat Roof & Membrane",
       location: "Sandyford, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCt3YQ6OJ_QtcbiU9c6GK47DGncDk6317I6_MOMHBzaVxHUDEXDg35JQmh5e5gBpWQqVgBNM30Oh_lJ2TzPJJib0Y_ZYEl7hm3MLTciAdBq_iUHPGbfCkNz6GMVJPZ-ZscSEJHYwyzEeGJz2jQKkQ0ol1zOy-GepY1x3ciH2i7c8toU8EuWp-j_biFfXo0QnwvkkVA5FYrLReqhFOtJtYHL57LCzAdkYKN5YVvPI-DhgAR3SQG-mbjN224Pj-7WAg3Q=s0",
+      imageUrl: "/assets/images/commercial-flat-roof.webp",
       shortDesc: "Complete strip-out of rotted organic felt, replaced with modern torch-on multi-layer waterproofing.",
       scope: [
         "Cleared water-logged gravel ballast and old perished bituminous felt",
@@ -131,7 +130,7 @@ export default function ProjectGallery() {
       category: "tile",
       categoryLabel: "Tile Ridge Conversion",
       location: "Dundrum, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCt4S5FwuvnyrARiVkpcDHPyJqGuQVJw29u1fDxpKAKTy3zp0Vmz-Qht8Hv3dkhmcB-6qYkKEuB407mPorzvDR-OIiwXhURQY3NMnN5L0RAHZO1394IfKnL0mKvcb5AWhR8QEf4OsmjvQ2BXvNIwas4no4eUdn1Fs6NukNAgI1Qx25_0470-56YZgC1l9CDx5ZrvZX1Zh_lCBoWm1x6F-zNgvYhBcvebxrcckwjpeCMfJSiFFyB3Npaf5e4yiNJT1NY=s0",
+      imageUrl: "/assets/images/dry-ridge-conversion.webp",
       shortDesc: "Removal of failing sandy ridge mortar, replaced with ventilated mechanical dry capping.",
       scope: [
         "Carefully removed cracked and detached ridge tiles",
@@ -149,7 +148,7 @@ export default function ProjectGallery() {
       category: "structural",
       categoryLabel: "Scaffolding & Site Logistics",
       location: "Howth, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBzDk9vaU3Sld54Md0a41nt6qCRvx-Rq-9w9Qu0qt33OIKxET40B3iPwhCItyLsHTgZ_xp5Yt_0iQsow8VEgPX_LYDQSvC3XaG_lmsF1V3drLpzJPzkPJNHkiro11PqopkU3wehiALIGKRwDEoOoYhBvZGPgI_2yZMRfRXCyCbgErA8w9DUYDVheeOPBAr6wboBtD4LFdByAueMYaznc2-wYvrZJounmJuUr6i80UWoo8zWKKSjE8vtBxM6KLWYSeWb=s0",
+      imageUrl: "/assets/images/residential-scaffolding.webp",
       shortDesc: "Secure multi-tier safety scaffolding access and waste container management for a full re-roof.",
       scope: [
         "Erected compliant double-boarded access scaffolding with ladders",
@@ -167,7 +166,7 @@ export default function ProjectGallery() {
       category: "flat",
       categoryLabel: "Flat Roof Waterproofing",
       location: "Malahide, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA7QpE9Amr6UhOepofK595QdgSqy_JCAPP2roEySKWMVwXvvX8MUIDCwnzI61oVFFnIaollc0XHzJq-JhCJpXEVkkd-IZfwsd7FJlu4a8Zn70bOX3dUlAaVLKlZASUcz8GoUaxsBXtySomlUDGX82OoX8ZVf8JD1ddwutVdPX_eipY7SzJyoiDXKe4BmsMmlMGOk8mINvfXpZmitB-u0aRhmaVGtpx8zOJ-CI9SOrElFKx8WpYwSdh9NndJOWju0KeF=s0",
+      imageUrl: "/assets/images/flat-roof-torch-on.webp",
       shortDesc: "Porous weathered flat deck fully stripped, insulated, and sealed with elastomeric torch-on felt.",
       scope: [
         "Stuck high-grade vapor barrier directly to deck plates",
@@ -181,11 +180,11 @@ export default function ProjectGallery() {
     },
     {
       id: "proj-8",
-      title: "Active Pitched Tile Stripping & stack prep",
+      title: "Active Pitched Tile Stripping & Stack Prep",
       category: "tile",
       categoryLabel: "Demolition & Prep Work",
       location: "Dalkey, Dublin",
-      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCldGesuLmPaHi9ZC0mXpm-EenTo75sEtIjwqwyRG2QV_TY-NgGKKJ_XBLd3dtTigd2pNnRx7nxiFoC91jXVeL_lLPLufXggQEav8pcNphfHviDAeJQKMGUptgXxxfhBZPBXwq85X_MXfqyzp5JncEXe21WzV-eJIOpRjFHwnTGoRWTSXSK7X1wyfAwABq5L7dGQ0h02x1MuHEnriVF-lhp2iLmWsZPfBGqxyMSDE9iTvJsTZHrmEsSopEJMyzwWbFW=s0",
+      imageUrl: "/assets/images/pitched-tile-stripping.webp",
       shortDesc: "Safe demolition of rotted interlocking concrete tiles, rafter evaluation, and chimney prep.",
       scope: [
         "Manually removed weathered mossy heavy concrete tiles",
@@ -199,9 +198,11 @@ export default function ProjectGallery() {
     }
   ];
 
-  const filteredProjects = activeFilter === "all" 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
+  const filteredProjects = featuredOnly
+    ? projects.slice(0, 4)
+    : activeFilter === "all"
+      ? projects
+      : projects.filter((p) => p.category === activeFilter);
 
   const filterButtons = [
     { id: "all", label: "All Works" },
@@ -212,7 +213,7 @@ export default function ProjectGallery() {
   ];
 
   return (
-    <section id="projects" className="py-24 bg-navy-slate border-t border-b border-navy-border text-slate-300">
+    <section id="projects" className="scroll-mt-24 py-24 bg-navy-slate border-t border-b border-navy-border text-slate-300 overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header with Left-to-Right and Right-to-Left animations */}
@@ -226,36 +227,49 @@ export default function ProjectGallery() {
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl text-white font-extrabold uppercase tracking-tight">
-                RECENT ROOFING PROJECTS
+                {featuredOnly ? "FEATURED ROOFING PROJECTS" : "RECENT ROOFING PROJECTS"}
               </h2>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="right" delay={0.15} distance={35}>
-            <p className="font-body text-slate-400 max-w-md text-sm leading-relaxed">
-              Directly documented site progress and finished architectural roofing projects executed across domestic and commercial premises in Dublin.
-            </p>
+            {featuredOnly ? (
+              <Link
+                to="/projects"
+                className="btn-secondary inline-flex items-center gap-2 !py-3 !px-5"
+              >
+                <span>View Full Portfolio (8 Projects)</span>
+                <ArrowRight className="w-4 h-4 text-copper" />
+              </Link>
+            ) : (
+              <p className="font-body text-slate-400 max-w-md text-sm leading-relaxed">
+                Directly documented site progress and finished architectural roofing projects executed across domestic and commercial premises in Dublin.
+              </p>
+            )}
           </ScrollReveal>
         </div>
 
-        {/* Filter Bar: Top to Bottom */}
-        <ScrollReveal direction="down" delay={0.1} distance={20}>
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-navy-deep border border-navy-border rounded-lg max-w-2xl mb-10">
-            {filterButtons.map((btn) => (
-              <button
-                key={btn.id}
-                onClick={() => setActiveFilter(btn.id)}
-                className={`px-4 py-2 text-xs font-display font-bold uppercase tracking-wider rounded transition-all duration-200 cursor-pointer focus:outline-none whitespace-nowrap ${
-                  activeFilter === btn.id
-                    ? "bg-copper text-white shadow"
-                    : "text-slate-400 hover:text-white hover:bg-navy-slate"
-                }`}
-              >
-                {btn.label}
-              </button>
-            ))}
-          </div>
-        </ScrollReveal>
+        {/* Filter Bar (shown on full gallery) */}
+        {!featuredOnly && (
+          <ScrollReveal direction="down" delay={0.1} distance={20}>
+            <div className="flex flex-wrap items-center gap-1.5 p-1 bg-navy-deep border border-navy-border rounded-lg max-w-2xl mb-10">
+              {filterButtons.map((btn) => (
+                <button
+                  key={btn.id}
+                  type="button"
+                  onClick={() => setActiveFilter(btn.id)}
+                  className={`px-4 py-2 text-xs font-display font-bold uppercase tracking-wider rounded transition-all duration-200 cursor-pointer focus:outline-none whitespace-nowrap ${
+                    activeFilter === btn.id
+                      ? "bg-copper text-white shadow"
+                      : "text-slate-400 hover:text-white hover:bg-navy-slate"
+                  }`}
+                >
+                  {btn.label}
+                </button>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
 
         {/* Projects Grid with dynamic directional entrances */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -306,8 +320,9 @@ export default function ProjectGallery() {
                     </div>
 
                     <button
+                      type="button"
                       onClick={() => setSelectedProject(proj)}
-                      className="btn-secondary w-full !py-2.5 text-[11px] flex items-center justify-center gap-1.5 focus:outline-none"
+                      className="btn-secondary w-full !py-2.5 text-[11px] flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-copper/50"
                     >
                       <Eye className="w-3.5 h-3.5" />
                       <span>View Project Log</span>
@@ -329,7 +344,7 @@ export default function ProjectGallery() {
             aria-label={selectedProject.title}
           >
             <div 
-              className="relative bg-white border border-slate-200 rounded-xl shadow-2xl max-w-3xl w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-slate-800"
+              className="relative bg-white border border-slate-200 rounded-xl shadow-2xl max-w-3xl w-full overflow-hidden animate-fadeIn text-slate-800"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
@@ -348,8 +363,9 @@ export default function ProjectGallery() {
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setSelectedProject(null)}
-                  className="p-1.5 text-slate-500 hover:text-navy-deep hover:bg-slate-200 rounded-lg transition-colors focus:outline-none"
+                  className="p-1.5 text-slate-500 hover:text-navy-deep hover:bg-slate-200 rounded-lg transition-colors focus:outline-none cursor-pointer"
                   aria-label="Close project"
                 >
                   <X className="w-5 h-5" />
@@ -357,7 +373,7 @@ export default function ProjectGallery() {
               </div>
 
               {/* Body */}
-              <div className="grid grid-cols-1 md:grid-cols-12 max-h-[75vh] overflow-y-auto">
+              <div className="grid grid-cols-1 md:grid-cols-12 max-h-[75vh] overflow-y-auto" data-lenis-prevent>
                 {/* Visual Image Banner left-ish */}
                 <div className="md:col-span-5 relative bg-navy-deep">
                   <img
@@ -373,7 +389,7 @@ export default function ProjectGallery() {
                     <span className="font-display text-[9px] text-copper uppercase tracking-widest font-bold block">
                       SITE RECORD
                     </span>
-                    <span className="font-mono text-xs font-bold block flex items-center gap-1.5">
+                    <span className="font-mono text-xs font-bold flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-copper shrink-0" /> {selectedProject.location}
                     </span>
                   </div>
@@ -407,7 +423,7 @@ export default function ProjectGallery() {
                   </div>
 
                   {/* Materials & Metadata */}
-                  <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-200">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-200">
                     <div className="space-y-1">
                       <span className="font-display text-[10px] text-slate-500 uppercase tracking-wider font-bold block">
                         MATERIALS LOG
@@ -435,13 +451,14 @@ export default function ProjectGallery() {
               </div>
 
               {/* Footer */}
-              <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+              <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
                 <span className="text-[10px] text-slate-500 font-body">
                   All photos depict real project sites executed by JG Roofing Ltd.
                 </span>
                 <button
+                  type="button"
                   onClick={handleModalScrollToEstimator}
-                  className="btn-primary !px-4 !py-2 text-xs"
+                  className="btn-primary !px-4 !py-2 text-xs shrink-0"
                 >
                   Request Similar Estimate
                 </button>

@@ -20,7 +20,7 @@ export default function Logo({ className = "", showSubtitle = true, size = "md" 
   return (
     <div className={`flex items-center gap-2.5 sm:gap-3 group ${className}`}>
       {/* Precision Architectural Roof Crest Emblem */}
-      <div className={`relative shrink-0 ${iconSizes[size]} bg-navy-surface border border-copper/40 rounded-lg p-1.5 flex items-center justify-center shadow-md group-hover:border-copper transition-colors duration-300`}>
+      <div className={`relative shrink-0 ${iconSizes[size]} bg-navy-slate border border-copper/40 rounded-lg p-1.5 flex items-center justify-center shadow-md group-hover:border-copper transition-colors duration-300`}>
         <svg
           viewBox="0 0 36 36"
           fill="none"

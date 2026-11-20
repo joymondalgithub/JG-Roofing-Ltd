@@ -25,7 +25,7 @@ export default function RepairVsReplace() {
   ];
 
   return (
-    <section id="repair-vs-replace" className="py-24 bg-warm-offwhite border-t border-b border-slate-200 text-slate-800 overflow-hidden">
+    <section id="repair-vs-replace" className="scroll-mt-24 py-24 bg-warm-offwhite border-t border-b border-slate-200 text-slate-800 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
@@ -84,14 +84,16 @@ export default function RepairVsReplace() {
             <ScrollReveal direction="right" delay={0.2} distance={42}>
               <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl aspect-[4/3] group bg-navy-deep">
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQFKeUzW8MMetwd2JES44f9n9fpnpgBdAmJ2TdhOLgJHXMyGYsN83_P6AnttG7XinJX3abyKQKYKo-XJ8m0CLTk4Tu2NMv0rNgjISgob3ETQEHC-tHNwW8-6d6hbmI33_Sg56xdat05kEZejgUq46XSQ8GyJGnEGOCjr4lDVrG7sII5vK1k1p1d-e4iMDMhP20mP3onJDBrW7410NBw_qbywnwh_LyTbLvXUERQKGZjckmcb7kGSoIc9_w2T-IIIgR=s0"
-                  alt="Technical roof underlay and breathable membrane installation"
+                  src="/assets/images/skylight-underlay.webp"
+                  alt="Technical roof underlay and breathable membrane installation around skylight"
+                  width={734}
+                  height={486}
                   loading="lazy"
                   decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none" />
                 
                 {/* Floating Quality Standard Box: slides up from bottom */}
                 <ScrollReveal direction="up" delay={0.35} distance={24} className="absolute bottom-6 left-6 right-6">

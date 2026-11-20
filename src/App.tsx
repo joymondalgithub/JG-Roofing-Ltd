@@ -1,21 +1,16 @@
 import { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { motion, useScroll, useSpring } from "motion/react";
 import Header from "./components/Header";
-import Hero from "./components/Hero";
-import ScrollTextStatement from "./components/ScrollTextStatement";
-import About from "./components/About";
-import Services from "./components/Services";
-import ScrollTextRibbon from "./components/ScrollTextRibbon";
-import ProjectGallery from "./components/ProjectGallery";
-import BeforeAfterSlider from "./components/BeforeAfterSlider";
-import RepairVsReplace from "./components/RepairVsReplace";
-import WhyChooseUs from "./components/WhyChooseUs";
-import ServiceAreas from "./components/ServiceAreas";
-import Testimonials from "./components/Testimonials";
-import EstimateCTA from "./components/EstimateCTA";
-import EstimatorAndQuote from "./components/EstimatorAndQuote";
 import Footer from "./components/Footer";
+import FloatingContact from "./components/FloatingContact";
+import HomePage from "./pages/HomePage";
+import ServiceDetailPage from "./pages/ServiceDetailPage";
+import AboutPage from "./pages/AboutPage";
+import ProjectsPage from "./pages/ProjectsPage";
+import ContactPage from "./pages/ContactPage";
+import { scrollToSection } from "./utils/scrollToSection";
 
 function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
@@ -33,11 +28,49 @@ function ScrollProgressBar() {
   );
 }
 
-export default function App() {
-  // Initialize Lenis for buttery-smooth scrolling
+function ScrollToTopOnRoute() {
+  const { pathname, hash } = useLocation();
+
   useEffect(() => {
-    // Respect user's motion preference
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.body.style.overflow = "";
+    const lenis = (
+      window as unknown as {
+        __lenis?: {
+          start: () => void;
+          scrollTo: (
+            target: number | HTMLElement,
+            opts?: { immediate?: boolean; offset?: number; duration?: number }
+          ) => void;
+        };
+      }
+    ).__lenis;
+
+    if (lenis) {
+      lenis.start();
+    }
+
+    if (hash) {
+      window.setTimeout(() => {
+        scrollToSection(hash);
+      }, 80);
+      return;
+    }
+
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, [pathname, hash]);
+
+  return null;
+}
+
+export default function App() {
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
@@ -50,7 +83,7 @@ export default function App() {
       touchMultiplier: 1.4,
     });
 
-    (window as any).__lenis = lenis;
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
 
     let rafId: number;
     function raf(time: number) {
@@ -59,85 +92,61 @@ export default function App() {
     }
     rafId = requestAnimationFrame(raf);
 
-    // Global interception for smooth anchor scrolling
     const handleAnchorClick = (e: MouseEvent) => {
+      if (e.defaultPrevented) return;
       const target = (e.target as HTMLElement).closest('a[href^="#"]');
       if (!target) return;
       const href = target.getAttribute("href");
-      if (href && href.length > 1 && href !== "#") {
-        const targetElement = document.querySelector(href);
-        if (targetElement) {
-          e.preventDefault();
-          lenis.scrollTo(targetElement as HTMLElement, {
-            offset: -76,
-            duration: 1.2,
-          });
-        }
-      }
+      if (!href || href === "#") return;
+      e.preventDefault();
+      scrollToSection(href);
     };
 
-    document.addEventListener("click", handleAnchorClick, { capture: true });
+    document.addEventListener("click", handleAnchorClick);
 
     return () => {
-      document.removeEventListener("click", handleAnchorClick, { capture: true });
+      document.removeEventListener("click", handleAnchorClick);
       cancelAnimationFrame(rafId);
       lenis.destroy();
-      delete (window as any).__lenis;
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-navy-deep antialiased selection:bg-copper selection:text-white">
-      {/* Precision Scroll Progress Indicator */}
+    <div className="min-h-screen flex flex-col justify-between bg-navy-deep antialiased selection:bg-copper selection:text-white overflow-x-clip">
       <ScrollProgressBar />
+      <ScrollToTopOnRoute />
 
-      {/* 1. Header & Navigation */}
       <Header />
 
-      {/* Main Sections */}
       <main className="flex-grow">
-        {/* 2. Hero Section */}
-        <Hero />
-
-        {/* Dynamic Scroll-Based Text Scrubbing Manifesto */}
-        <ScrollTextStatement />
-
-        {/* 3. About Section */}
-        <About />
-
-        {/* Kinetic Scroll-Driven Ribbon */}
-        <ScrollTextRibbon />
-
-        {/* 4. Specialized Services Grid */}
-        <Services />
-
-        {/* 5. Project Works Gallery */}
-        <ProjectGallery />
-
-        {/* 6. Drag Compare Before/After Slider */}
-        <BeforeAfterSlider />
-
-        {/* 7. Diagnostic Assessment: Repair vs Replace */}
-        <RepairVsReplace />
-
-        {/* 8. Corporate Standards Pillars */}
-        <WhyChooseUs />
-
-        {/* 9. Surveyor Geographic Coverage Areas */}
-        <ServiceAreas />
-
-        {/* 10. Client Testimonials */}
-        <Testimonials />
-
-        {/* 11. Estimate CTA Banner */}
-        <EstimateCTA />
-
-        {/* 12. Interactive Cost Estimator & Quote Booking Desk */}
-        <EstimatorAndQuote />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/services/roof-repairs"
+            element={<ServiceDetailPage slug="roof-repairs" />}
+          />
+          <Route
+            path="/services/new-roofs"
+            element={<ServiceDetailPage slug="new-roofs" />}
+          />
+          <Route
+            path="/services/chimney-leadwork"
+            element={<ServiceDetailPage slug="chimney-leadwork" />}
+          />
+          <Route
+            path="/services/gutters-fascias"
+            element={<ServiceDetailPage slug="gutters-fascias" />}
+          />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
       </main>
 
-      {/* 13. Premium Footer */}
       <Footer />
+      <FloatingContact />
     </div>
   );
 }
